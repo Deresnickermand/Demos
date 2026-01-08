@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#1E293B">
+    <title>Værksted Dokumentation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0EA5E9;
+            --primary-dark: #0284C7;
+            --secondary: #64748B;
+            --success: #10B981;
+            --danger: #EF4444;
+            --warning: #F59E0B;
+            --bg: #0F172A;
+            --bg-card: #1E293B;
+            --text: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334155;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            padding-bottom: 80px;
+        }
+        
+        .app-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: var(--bg-card);
+            padding: 1.5rem;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .header-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--primary), #0284C7);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.75rem;
+        }
+        
+        .header-text h1 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .header-text p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .content {
+            padding: 1.5rem;
+        }
+        
+        .card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(14, 165, 233, 0.2);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .card-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.75rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1.125rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            transition: all 0.2s;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+        }
+        
+        .form-input::placeholder {
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            padding: 1rem;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            color: var(--text);
+            font-family: inherit;
+            font-size: 1rem;
+            resize: vertical;
+            min-height: 120px;
+            transition: all 0.2s;
+        }
+        
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.2);
+        }
+        
+        .btn {
+            padding: 1.125rem 2rem;
+            border-radius: 14px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1.125rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #0284C7);
+            color: white;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(14, 165, 233, 0.5);
+        }
+        
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+        
+        .btn-secondary {
+            background: var(--bg);
+            color: var(--text);
+            border: 2px solid var(--border);
+            width: 100%;
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-large {
+            padding: 1.75rem 2rem;
+            font-size: 1.25rem;
+            min-height: 80px;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+        
+        .media-section {
+            display: grid;
+            gap: 1rem;
+        }
+        
+        .media-button {
+            background: var(--bg);
+            border: 2px dashed var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .media-button:hover {
+            border-color: var(--primary);
+            background: rgba(14, 165, 233, 0.05);
+            transform: scale(1.02);
+        }
+        
+        .media-button-icon {
+            font-size: 3rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .media-button-text {
+            font-weight: 600;
+            font-size: 1.125rem;
+            color: var(--text);
+            margin-bottom: 0.25rem;
+        }
+        
+        .media-button-hint {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+        
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .media-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 12px;
+            overflow: hidden;
+            background: var(--bg);
+            border: 2px solid var(--border);
+        }
+        
+        .media-item img,
+        .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-remove {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.95);
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        
+        .media-remove:hover {
+            background: var(--danger);
+            transform: scale(1.15);
+        }
+        
+        .media-badge {
+            position: absolute;
+            bottom: 0.5rem;
+            left: 0.5rem;
+            padding: 0.375rem 0.75rem;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(10px);
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: white;
+        }
+        
+        .video-recording {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--bg);
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .video-recording.active {
+            display: flex;
+        }
+        
+        .video-preview {
+            flex: 1;
+            background: black;
+            position: relative;
+        }
+        
+        .video-preview video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-timer {
+            position: absolute;
+            top: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(239, 68, 68, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .recording-pulse {
+            width: 12px;
+            height: 12px;
+            background: white;
+            border-radius: 50%;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+        
+        .video-controls {
+            padding: 2rem;
+            background: var(--bg-card);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .info-box {
+            background: rgba(14, 165, 233, 0.1);
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .info-box p {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin: 0;
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 600;
+        }
+        
+        .status-badge.recording {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+        
+        .status-badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+        
+        .summary-section {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .summary-item:last-child {
+            border-bottom: none;
+        }
+        
+        .summary-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        .summary-value {
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .success-animation {
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+            animation: scaleIn 0.5s ease-out;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .voice-button {
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(14, 165, 233, 0.4);
+            transition: all 0.2s;
+        }
+        
+        .voice-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .voice-button.listening {
+            background: var(--danger);
+            animation: pulse-scale 1s infinite;
+        }
+        
+        @keyframes pulse-scale {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        @media (max-width: 480px) {
+            .content {
+                padding: 1rem;
+            }
+            
+            .media-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-content">
+                <div class="header-icon">🔧</div>
+                <div class="header-text">
+                    <h1>Værksted Dokumentation</h1>
+                    <p id="mechanicName">Mekaniker: Jens</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="content">
+            <!-- Step 1: Work Order -->
+            <div id="step1">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">📋</div>
+                        <h2 class="card-title">Arbejdskort Nummer</h2>
+                    </div>
+
+                    <div class="info-box">
+                        <p>💡 Indtast arbejdskort-nummeret, så kan værkføreren finde dokumentationen i sin mail.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Arbejdskort Nr.</label>
+                        <input 
+                            type="text" 
+                            class="form-input" 
+                            id="workOrderInput" 
+                            placeholder="Eks: WK-2025-0142"
+                            autocomplete="off"
+                        >
+                    </div>
+
+                    <button class="btn btn-primary btn-large" onclick="startDocumentation()">
+                        <span>Start Dokumentation</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 2: Documentation -->
+            <div id="step2" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">🎥</div>
+                        <h2 class="card-title">Tag Video & Fotos</h2>
+                    </div>
+
+                    <div class="info-box">
+                        <p><strong>Arbejdskort:</strong> <span id="displayWorkOrder"></span></p>
+                    </div>
+
+                    <div class="media-section">
+                        <!-- Video Button -->
+                        <div class="media-button" onclick="startVideoRecording()">
+                            <div class="media-button-icon">🎥</div>
+                            <div class="media-button-text">Optag Video-gennemgang</div>
+                            <div class="media-button-hint">Max 3 minutter</div>
+                        </div>
+
+                        <!-- Photo Button -->
+                        <div class="media-button" onclick="document.getElementById('photoInput').click()">
+                            <div class="media-button-icon">📷</div>
+                            <div class="media-button-text">Tag Fotos</div>
+                            <div class="media-button-hint">3-10 billeder anbefales</div>
+                        </div>
+                        <input type="file" id="photoInput" accept="image/*" multiple style="display: none;" onchange="handlePhotoUpload(event)">
+                    </div>
+
+                    <!-- Media Preview Grid -->
+                    <div class="media-grid" id="mediaGrid"></div>
+
+                    <div class="form-group" style="margin-top: 2rem;">
+                        <label class="form-label">Beskrivelse / Noter</label>
+                        <textarea 
+                            class="form-textarea" 
+                            id="notesInput" 
+                            placeholder="Beskriv kort hvad du har lavet og eventuelle bemærkninger til kunden..."
+                        ></textarea>
+                        <button class="voice-button" id="voiceButton" onclick="toggleVoiceInput()">
+                            🎤
+                        </button>
+                    </div>
+
+                    <button class="btn btn-primary btn-large" onclick="reviewDocumentation()">
+                        <span>Gennemgå & Send</span>
+                        <span>→</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Step 3: Review -->
+            <div id="step3" class="hidden">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">✅</div>
+                        <h2 class="card-title">Gennemgå Dokumentation</h2>
+                    </div>
+
+                    <div class="summary-section">
+                        <div class="summary-item">
+                            <span class="summary-label">Arbejdskort:</span>
+                            <span class="summary-value" id="reviewWorkOrder"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Mekaniker:</span>
+                            <span class="summary-value" id="reviewMechanic"></span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Videoer:</span>
+                            <span class="summary-value" id="reviewVideos">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Fotos:</span>
+                            <span class="summary-value" id="reviewPhotos">0</span>
+                        </div>
+                        <div class="summary-item">
+                            <span class="summary-label">Noter:</span>
+                            <span class="summary-value" id="reviewNotes">-</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <p>📧 Sendes til: <strong>vaerksted@deresauto.gl</strong></p>
+                    </div>
+
+                    <div style="display: grid; gap: 1rem;">
+                        <button class="btn btn-success btn-large" onclick="sendDocumentation()">
+                            <span>📤 Send til Værkfører</span>
+                        </button>
+                        <button class="btn btn-secondary" onclick="goBackToEdit()">
+                            <span>← Tilbage til redigering</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Step 4: Success -->
+            <div id="step4" class="hidden">
+                <div class="card">
+                    <div class="success-animation">
+                        <div class="success-icon">✅</div>
+                        <h2 style="font-size: 1.75rem; margin-bottom: 1rem; color: var(--success);">Dokumentation Sendt!</h2>
+                        <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                            Din dokumentation er sendt til værkføreren.<br>
+                            Arbejdskort: <strong id="finalWorkOrder"></strong>
+                        </p>
+
+                        <div class="info-box">
+                            <p>💡 Værkføreren kan nu se alle dine fotos, videoer og noter i sin email.</p>
+                        </div>
+
+                        <button class="btn btn-primary btn-large" onclick="startNewDocumentation()">
+                            <span>Start Ny Dokumentation</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Recording Overlay -->
+        <div class="video-recording" id="videoRecordingOverlay">
+            <div class="video-preview">
+                <video id="videoPreview" autoplay muted playsinline></video>
+                <div class="video-timer" id="videoTimer">
+                    <div class="recording-pulse"></div>
+                    <span id="timerDisplay">00:00</span>
+                </div>
+            </div>
+            <div class="video-controls">
+                <div class="info-box">
+                    <p>💡 Forklar hvad du har gjort og hvad kunden skal vide. Max 3 minutter.</p>
+                </div>
+                <button class="btn btn-danger btn-large" onclick="stopVideoRecording()">
+                    <span>⏹️ Stop Optagelse</span>
+                </button>
+                <button class="btn btn-secondary" onclick="cancelVideoRecording()">
+                    <span>✖️ Annuller</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let workOrderNumber = '';
+        let mechanicName = 'Jens';
+        let photos = [];
+        let videos = [];
+        let notes = '';
+        let mediaRecorder = null;
+        let recordedChunks = [];
+        let recordingTimer = null;
+        let recordingSeconds = 0;
+        let videoStream = null;
+        let recognition = null;
+
+        // Step 1: Start Documentation
+        function startDocumentation() {
+            const input = document.getElementById('workOrderInput').value.trim();
+            if (!input) {
+                alert('⚠️ Indtast venligst arbejdskort-nummer');
+                return;
+            }
+            
+            workOrderNumber = input;
+            document.getElementById('displayWorkOrder').textContent = workOrderNumber;
+            
+            // Show step 2
+            document.getElementById('step1').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        // Photo Upload
+        function handlePhotoUpload(event) {
+            const files = Array.from(event.target.files);
+            
+            files.forEach(file => {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        photos.push({
+                            type: 'photo',
+                            data: e.target.result,
+                            timestamp: new Date().toISOString()
+                        });
+                        renderMediaGrid();
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Video Recording
+        async function startVideoRecording() {
+            try {
+                // Request camera and microphone access
+                videoStream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { facingMode: 'environment' }, 
+                    audio: true 
+                });
+                
+                document.getElementById('videoPreview').srcObject = videoStream;
+                document.getElementById('videoRecordingOverlay').classList.add('active');
+                
+                // Start recording
+                recordedChunks = [];
+                mediaRecorder = new MediaRecorder(videoStream, {
+                    mimeType: 'video/webm;codecs=vp8,opus'
+                });
+                
+                mediaRecorder.ondataavailable = (event) => {
+                    if (event.data.size > 0) {
+                        recordedChunks.push(event.data);
+                    }
+                };
+                
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(recordedChunks, { type: 'video/webm' });
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        videos.push({
+                            type: 'video',
+                            data: e.target.result,
+                            duration: recordingSeconds,
+                            timestamp: new Date().toISOString()
+                        });
+                        renderMediaGrid();
+                    };
+                    reader.readAsDataURL(blob);
+                    
+                    // Clean up
+                    if (videoStream) {
+                        videoStream.getTracks().forEach(track => track.stop());
+                        videoStream = null;
+                    }
+                };
+                
+                mediaRecorder.start();
+                
+                // Start timer
+                recordingSeconds = 0;
+                recordingTimer = setInterval(() => {
+                    recordingSeconds++;
+                    updateTimer();
+                    
+                    // Auto-stop at 3 minutes
+                    if (recordingSeconds >= 180) {
+                        stopVideoRecording();
+                    }
+                }, 1000);
+                
+            } catch (error) {
+                console.error('Error accessing camera:', error);
+                alert('⚠️ Kunne ikke tilgå kamera/mikrofon. Tjek tilladelser.');
+            }
+        }
+
+        function stopVideoRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+                clearInterval(recordingTimer);
+                document.getElementById('videoRecordingOverlay').classList.remove('active');
+            }
+        }
+
+        function cancelVideoRecording() {
+            if (mediaRecorder && mediaRecorder.state === 'recording') {
+                mediaRecorder.stop();
+            }
+            clearInterval(recordingTimer);
+            if (videoStream) {
+                videoStream.getTracks().forEach(track => track.stop());
+                videoStream = null;
+            }
+            document.getElementById('videoRecordingOverlay').classList.remove('active');
+        }
+
+        function updateTimer() {
+            const minutes = Math.floor(recordingSeconds / 60);
+            const seconds = recordingSeconds % 60;
+            document.getElementById('timerDisplay').textContent = 
+                `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+        }
+
+        // Render Media Grid
+        function renderMediaGrid() {
+            const grid = document.getElementById('mediaGrid');
+            const allMedia = [...videos, ...photos];
+            
+            grid.innerHTML = allMedia.map((item, index) => {
+                if (item.type === 'video') {
+                    return `
+                        <div class="media-item">
+                            <video src="${item.data}" controls></video>
+                            <div class="media-badge">🎥 ${formatDuration(item.duration)}</div>
+                            <button class="media-remove" onclick="removeMedia(${index})">×</button>
+                        </div>
+                    `;
+                } else {
+                    return `
+                        <div class="media-item">
+                            <img src="${item.data}" alt="Foto">
+                            <div class="media-badge">📷 Foto</div>
+                            <button class="media-remove" onclick="removeMedia(${index})">×</button>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function removeMedia(index) {
+            const allMedia = [...videos, ...photos];
+            const item = allMedia[index];
+            
+            if (item.type === 'video') {
+                videos = videos.filter(v => v !== item);
+            } else {
+                photos = photos.filter(p => p !== item);
+            }
+            
+            renderMediaGrid();
+        }
+
+        function formatDuration(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        // Voice Input
+        function toggleVoiceInput() {
+            const button = document.getElementById('voiceButton');
+            
+            if (!recognition) {
+                // Initialize speech recognition
+                const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+                if (!SpeechRecognition) {
+                    alert('⚠️ Din browser understøtter ikke tale-indtastning');
+                    return;
+                }
+                
+                recognition = new SpeechRecognition();
+                recognition.lang = 'da-DK';
+                recognition.continuous = true;
+                recognition.interimResults = false;
+                
+                recognition.onresult = (event) => {
+                    const transcript = Array.from(event.results)
+                        .map(result => result[0].transcript)
+                        .join(' ');
+                    
+                    const notesInput = document.getElementById('notesInput');
+                    notesInput.value += (notesInput.value ? ' ' : '') + transcript;
+                };
+                
+                recognition.onerror = (event) => {
+                    console.error('Speech recognition error:', event.error);
+                    button.classList.remove('listening');
+                    recognition.stop();
+                };
+                
+                recognition.onend = () => {
+                    button.classList.remove('listening');
+                };
+            }
+            
+            if (button.classList.contains('listening')) {
+                recognition.stop();
+                button.classList.remove('listening');
+            } else {
+                recognition.start();
+                button.classList.add('listening');
+            }
+        }
+
+        // Step 3: Review
+        function reviewDocumentation() {
+            notes = document.getElementById('notesInput').value.trim();
+            
+            if (videos.length === 0 && photos.length === 0) {
+                alert('⚠️ Tilføj mindst én video eller foto');
+                return;
+            }
+            
+            // Populate review
+            document.getElementById('reviewWorkOrder').textContent = workOrderNumber;
+            document.getElementById('reviewMechanic').textContent = mechanicName;
+            document.getElementById('reviewVideos').textContent = videos.length;
+            document.getElementById('reviewPhotos').textContent = photos.length;
+            document.getElementById('reviewNotes').textContent = notes || 'Ingen noter';
+            
+            // Show step 3
+            document.getElementById('step2').classList.add('hidden');
+            document.getElementById('step3').classList.remove('hidden');
+        }
+
+        function goBackToEdit() {
+            document.getElementById('step3').classList.add('hidden');
+            document.getElementById('step2').classList.remove('hidden');
+        }
+
+        // Send Documentation
+        function sendDocumentation() {
+            // Simulate sending (in real app: upload to server/Firebase)
+            document.getElementById('step3').classList.add('hidden');
+            
+            // Show loading for 2 seconds
+            const loadingDiv = document.createElement('div');
+            loadingDiv.className = 'loading';
+            loadingDiv.innerHTML = `
+                <div class="spinner"></div>
+                <p style="color: var(--text-muted);">Sender dokumentation...</p>
+            `;
+            document.querySelector('.content').appendChild(loadingDiv);
+            
+            setTimeout(() => {
+                loadingDiv.remove();
+                document.getElementById('finalWorkOrder').textContent = workOrderNumber;
+                document.getElementById('step4').classList.remove('hidden');
+                
+                // In real app: Send to vaerksted@deresauto.gl
+                console.log('Sending documentation:', {
+                    workOrder: workOrderNumber,
+                    mechanic: mechanicName,
+                    photos: photos.length,
+                    videos: videos.length,
+                    notes: notes
+                });
+            }, 2000);
+        }
+
+        // Start New
+        function startNewDocumentation() {
+            // Reset state
+            workOrderNumber = '';
+            photos = [];
+            videos = [];
+            notes = '';
+            
+            // Reset UI
+            document.getElementById('workOrderInput').value = '';
+            document.getElementById('notesInput').value = '';
+            document.getElementById('mediaGrid').innerHTML = '';
+            
+            // Show step 1
+            document.getElementById('step4').classList.add('hidden');
+            document.getElementById('step1').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

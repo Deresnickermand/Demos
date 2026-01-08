@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deres Auto - Fleet Management</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --primary: #0F172A;
+            --secondary: #1E293B;
+            --accent: #3B82F6;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --danger: #EF4444;
+            --bg: #F8FAFC;
+            --text: #0F172A;
+            --text-muted: #64748B;
+            --border: #E2E8F0;
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #2563EB);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 8px;
+            border: none;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
+            font-size: 0.875rem;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2563EB;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-muted);
+        }
+        
+        .btn-ghost:hover {
+            background: var(--bg);
+            color: var(--text);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), #2563EB);
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+        }
+        
+        .metric-card:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .metric-label {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .metric-change {
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .metric-change.positive {
+            color: var(--success);
+        }
+        
+        .metric-change.negative {
+            color: var(--danger);
+        }
+        
+        .section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .filters {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: white;
+            color: var(--text);
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .filter-select:hover {
+            border-color: var(--accent);
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.5rem 1rem 0.5rem 2.5rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            transition: all 0.2s;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 0.75rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        
+        .vehicle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .vehicle-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .vehicle-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
+        }
+        
+        .vehicle-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+        }
+        
+        .status-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            backdrop-filter: blur(10px);
+        }
+        
+        .status-available {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+        
+        .status-rented {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .status-service {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
+        }
+        
+        .vehicle-info {
+            padding: 1.25rem;
+        }
+        
+        .vehicle-reg {
+            font-family: 'Space Mono', monospace;
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0.25rem;
+        }
+        
+        .vehicle-name {
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+        }
+        
+        .category-badge {
+            display: inline-block;
+            padding: 0.25rem 0.625rem;
+            background: var(--bg);
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        .vehicle-stats {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        
+        .stat-value {
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        .alerts-section {
+            background: linear-gradient(135deg, #FEF3C7 0%, #FCA5A5 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+        
+        .alerts-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+        
+        .alert-icon {
+            width: 32px;
+            height: 32px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--warning);
+        }
+        
+        .alerts-title {
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--primary);
+        }
+        
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .alert-item {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .alert-item:hover {
+            transform: translateX(4px);
+        }
+        
+        .alert-text {
+            color: var(--text);
+            font-size: 0.875rem;
+        }
+        
+        .alert-action {
+            padding: 0.5rem 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .alert-action:hover {
+            background: #2563EB;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .header {
+                padding: 1rem;
+            }
+            
+            .metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .vehicle-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+            }
+            
+            .search-box {
+                width: 100%;
+            }
+        }
+        
+        .loading-animation {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.5;
+            }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <div class="logo-icon">🚗</div>
+            <span>Deres Auto Fleet</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-ghost">📊 Rapporter</button>
+            <button class="btn btn-ghost">⚙️ Indstillinger</button>
+            <button class="btn btn-primary">+ Ny Booking</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Key Metrics -->
+        <div class="metrics">
+            <div class="metric-card fade-in stagger-1">
+                <div class="metric-label">Udlejet lige nu</div>
+                <div class="metric-value">18/24</div>
+                <div class="metric-change positive">↑ +3 fra i går</div>
+            </div>
+            <div class="metric-card fade-in stagger-2">
+                <div class="metric-label">Udnyttelse</div>
+                <div class="metric-value">75%</div>
+                <div class="metric-change positive">↑ +5% denne uge</div>
+            </div>
+            <div class="metric-card fade-in stagger-3">
+                <div class="metric-label">Omsætning (MTD)</div>
+                <div class="metric-value">48.500 kr</div>
+                <div class="metric-change positive">↑ +12% vs. sidste md</div>
+            </div>
+            <div class="metric-card fade-in stagger-4">
+                <div class="metric-label">Alarmer</div>
+                <div class="metric-value">3</div>
+                <div class="metric-change negative">⚠️ Kræver handling</div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="alerts-section fade-in" style="animation-delay: 0.5s; opacity: 0;">
+            <div class="alerts-header">
+                <div class="alert-icon">⚠️</div>
+                <div class="alerts-title">Kræver handling</div>
+            </div>
+            <div class="alert-list">
+                <div class="alert-item">
+                    <div class="alert-text">🔧 Hyundai Tucson #14: Service om 200 km</div>
+                    <button class="alert-action">Book service</button>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-text">📋 Mercedes Vito #7: Forsikring udløber om 15 dage</div>
+                    <button class="alert-action">Forny</button>
+                </div>
+                <div class="alert-item">
+                    <div class="alert-text">⏰ Toyota Yaris #3: Ikke serviceret i 8 måneder</div>
+                    <button class="alert-action">Se detaljer</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vehicle List -->
+        <div class="section fade-in" style="animation-delay: 0.6s; opacity: 0;">
+            <div class="section-header">
+                <h2 class="section-title">Alle Biler (24)</h2>
+                <div class="filters">
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="all">Alle kategorier</option>
+                        <option value="A">Kategori A</option>
+                        <option value="B">Kategori B</option>
+                        <option value="C">Kategori C</option>
+                        <option value="C+">Kategori C+</option>
+                    </select>
+                    <select class="filter-select" id="statusFilter">
+                        <option value="all">Alle status</option>
+                        <option value="available">Ledig</option>
+                        <option value="rented">Udlejet</option>
+                        <option value="service">Til service</option>
+                    </select>
+                    <div class="search-box">
+                        <span class="search-icon">🔍</span>
+                        <input type="text" class="search-input" placeholder="Søg reg.nr eller model..." id="searchInput">
+                    </div>
+                </div>
+            </div>
+
+            <div class="vehicle-grid" id="vehicleGrid">
+                <!-- Vehicles will be generated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo data
+        const vehicles = [
+            { regNr: 'AB 12 345', make: 'Toyota', model: 'Yaris 1.5 Hybrid', category: 'A', status: 'available', km: 45200, icon: '🚗', price: 450 },
+            { regNr: 'AB 23 456', make: 'Hyundai', model: 'i20', category: 'A', status: 'rented', km: 32100, icon: '🚗', price: 450, rentedUntil: '12/01' },
+            { regNr: 'CD 34 567', make: 'Mercedes', model: 'A-Klasse', category: 'B', status: 'available', km: 28900, icon: '🚙', price: 650 },
+            { regNr: 'EF 45 678', make: 'Mitsubishi', model: 'ASX', category: 'B', status: 'rented', km: 51300, icon: '🚙', price: 650, rentedUntil: '15/01' },
+            { regNr: 'GH 56 789', make: 'Toyota', model: 'RAV4 Hybrid', category: 'C', status: 'available', km: 38200, icon: '🚙', price: 850 },
+            { regNr: 'IJ 67 890', make: 'Hyundai', model: 'Tucson PHEV', category: 'C', status: 'service', km: 49800, icon: '🚙', price: 850 },
+            { regNr: 'KL 78 901', make: 'Mercedes', model: 'GLE 350e', category: 'C+', status: 'rented', km: 22000, icon: '🚗', price: 1200, rentedUntil: '20/01' },
+            { regNr: 'MN 89 012', make: 'Toyota', model: 'Hilux 4x4', category: 'C', status: 'available', km: 55600, icon: '🚚', price: 900 },
+            { regNr: 'OP 90 123', make: 'Mitsubishi', model: 'L200', category: 'C', status: 'rented', km: 41200, icon: '🚚', price: 900, rentedUntil: '18/01' },
+            { regNr: 'QR 01 234', make: 'Mercedes', model: 'Vito', category: 'C+', status: 'available', km: 34100, icon: '🚐', price: 1100 },
+            { regNr: 'ST 12 345', make: 'Toyota', model: 'Proace', category: 'C+', status: 'rented', km: 28500, icon: '🚐', price: 1100, rentedUntil: '16/01' },
+            { regNr: 'UV 23 456', make: 'Hyundai', model: 'Kona Electric', category: 'B', status: 'available', km: 19200, icon: '⚡', price: 700 },
+        ];
+
+        function renderVehicles(filteredVehicles = vehicles) {
+            const grid = document.getElementById('vehicleGrid');
+            grid.innerHTML = filteredVehicles.map((vehicle, index) => `
+                <div class="vehicle-card fade-in" style="animation-delay: ${0.7 + (index * 0.05)}s; opacity: 0;">
+                    <div class="vehicle-image" style="background: linear-gradient(135deg, ${getGradient(vehicle.category)});">
+                        <span>${vehicle.icon}</span>
+                        <span class="status-badge status-${vehicle.status}">
+                            ${vehicle.status === 'available' ? '🟢 Ledig' : 
+                              vehicle.status === 'rented' ? `🔴 Til ${vehicle.rentedUntil}` : 
+                              '🟡 Service'}
+                        </span>
+                    </div>
+                    <div class="vehicle-info">
+                        <div class="vehicle-reg">${vehicle.regNr}</div>
+                        <div class="vehicle-name">${vehicle.make} ${vehicle.model}</div>
+                        <span class="category-badge">Kategori ${vehicle.category}</span>
+                        <div class="vehicle-stats">
+                            <div class="stat-item">
+                                <span class="stat-label">Km-stand</span>
+                                <span class="stat-value">${vehicle.km.toLocaleString('da-DK')} km</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">Dagspris</span>
+                                <span class="stat-value">${vehicle.price} kr</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function getGradient(category) {
+            const gradients = {
+                'A': '#667eea 0%, #764ba2 100%',
+                'B': '#f093fb 0%, #f5576c 100%',
+                'C': '#4facfe 0%, #00f2fe 100%',
+                'C+': '#43e97b 0%, #38f9d7 100%'
+            };
+            return gradients[category] || gradients['A'];
+        }
+
+        function filterVehicles() {
+            const category = document.getElementById('categoryFilter').value;
+            const status = document.getElementById('statusFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = vehicles.filter(vehicle => {
+                const matchCategory = category === 'all' || vehicle.category === category;
+                const matchStatus = status === 'all' || vehicle.status === status;
+                const matchSearch = search === '' || 
+                    vehicle.regNr.toLowerCase().includes(search) ||
+                    vehicle.make.toLowerCase().includes(search) ||
+                    vehicle.model.toLowerCase().includes(search);
+                
+                return matchCategory && matchStatus && matchSearch;
+            });
+
+            renderVehicles(filtered);
+        }
+
+        // Event listeners
+        document.getElementById('categoryFilter').addEventListener('change', filterVehicles);
+        document.getElementById('statusFilter').addEventListener('change', filterVehicles);
+        document.getElementById('searchInput').addEventListener('input', filterVehicles);
+
+        // Initial render
+        renderVehicles();
+
+        // Demo: Click on vehicle card
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.vehicle-card');
+            if (card) {
+                alert('🚗 Åbner bil-detaljer...\n\nI den rigtige app ville dette åbne en side med:\n• Fuld service-historik\n• Booking-kalender\n• Dokumenter\n• Skades-rapporter');
+            }
+        });
+    </script>
+</body>
+</html>
