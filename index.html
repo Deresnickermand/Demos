@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deres Auto - Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: white;
+        }
+        
+        .logo {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+        }
+        
+        .demos {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .demo-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        
+        .demo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        
+        .demo-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #1E293B;
+        }
+        
+        .demo-description {
+            color: #64748B;
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .demo-users {
+            font-size: 0.875rem;
+            color: #94A3B8;
+            font-weight: 600;
+        }
+        
+        .demo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #3B82F6;
+            font-weight: 600;
+            margin-top: 1rem;
+            font-size: 1rem;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            color: white;
+            opacity: 0.8;
+        }
+        
+        @media (max-width: 640px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .demo-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">🚗</div>
+            <h1>Deres Auto</h1>
+            <p class="subtitle">Automation Demos</p>
+        </div>
+        
+        <div class="demos">
+            <a href="fleet-management-demo.html" class="demo-card">
+                <div class="demo-icon">📊</div>
+                <h2 class="demo-title">Fleet Management Dashboard</h2>
+                <p class="demo-description">
+                    Real-time overblik over alle 24+ udlejningsbiler. Se status, bookings, 
+                    service-påmindelser og udnyttelsesgrad.
+                </p>
+                <p class="demo-users">👥 Til: Kontor-personale & Udlejningsteam</p>
+                <span class="demo-link">Åbn demo →</span>
+            </a>
+            
+            <a href="damage-report-demo.html" class="demo-card">
+                <div class="demo-icon">🔧</div>
+                <h2 class="demo-title">Skadecenter Kundeportal</h2>
+                <p class="demo-description">
+                    Kunder rapporterer skader online med fotos og beskrivelse. 
+                    Automatisk sagsnummer og notifikationer til skadecentret.
+                </p>
+                <p class="demo-users">👥 Til: Kunder & Skadecenter-medarbejdere</p>
+                <span class="demo-link">Åbn demo →</span>
+            </a>
+            
+            <a href="mechanic-documentation-ios.html" class="demo-card">
+                <div class="demo-icon">📱</div>
+                <h2 class="demo-title">Mekaniker Dokumentation</h2>
+                <p class="demo-description">
+                    Mekanikere dokumenterer arbejde med video og fotos direkte fra telefon. 
+                    Sendes automatisk til værkfører via email.
+                </p>
+                <p class="demo-users">👥 Til: Mekanikere & Værkførere</p>
+                <span class="demo-link">Åbn demo →</span>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>💡 Disse er funktionelle prototyper</p>
+            <p style="margin-top: 0.5rem; font-size: 0.875rem;">
+                Bygget til Deres Auto ApS præsentation, Januar 2026
+            </p>
+        </div>
+    </div>
+</body>
+</html>
