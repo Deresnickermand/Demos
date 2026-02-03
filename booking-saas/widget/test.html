@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Widget Test</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            margin: 0;
+            padding: 40px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 40px;
+        }
+        .demo-section {
+            margin-bottom: 60px;
+        }
+        .demo-section h2 {
+            color: #666;
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+        .embed-code {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 16px;
+            border-radius: 8px;
+            font-family: 'SF Mono', Monaco, monospace;
+            font-size: 13px;
+            margin-bottom: 20px;
+            overflow-x: auto;
+        }
+        .embed-code .tag { color: #569cd6; }
+        .embed-code .attr { color: #9cdcfe; }
+        .embed-code .value { color: #ce9178; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Booking.gl Widget Demo</h1>
+
+        <!-- Light Theme Demo -->
+        <div class="demo-section">
+            <h2>Light Theme (Deres Auto)</h2>
+            <div class="embed-code">
+                <span class="tag">&lt;script</span>
+                <span class="attr"> src</span>=<span class="value">"https://booking.gl/widget.js"</span>
+                <span class="attr"> data-business</span>=<span class="value">"deres-auto"</span>
+                <span class="attr"> data-theme</span>=<span class="value">"light"</span>
+                <span class="tag">&gt;&lt;/script&gt;</span>
+            </div>
+
+            <!-- Widget will be injected here -->
+            <script
+                src="./dist/widget.js"
+                data-business="deres-auto"
+                data-theme="light"
+                data-supabase-url="YOUR_SUPABASE_URL"
+                data-supabase-key="YOUR_SUPABASE_ANON_KEY"
+            ></script>
+        </div>
+
+        <!-- Dark Theme Demo -->
+        <div class="demo-section">
+            <h2>Dark Theme (Salon Nuka)</h2>
+            <div class="embed-code">
+                <span class="tag">&lt;script</span>
+                <span class="attr"> src</span>=<span class="value">"https://booking.gl/widget.js"</span>
+                <span class="attr"> data-business</span>=<span class="value">"salon-nuka"</span>
+                <span class="attr"> data-theme</span>=<span class="value">"dark"</span>
+                <span class="attr"> data-primary-color</span>=<span class="value">"#db2777"</span>
+                <span class="tag">&gt;&lt;/script&gt;</span>
+            </div>
+
+            <!-- Widget will be injected here -->
+            <script
+                src="./dist/widget.js"
+                data-business="salon-nuka"
+                data-theme="dark"
+                data-primary-color="#db2777"
+                data-supabase-url="YOUR_SUPABASE_URL"
+                data-supabase-key="YOUR_SUPABASE_ANON_KEY"
+            ></script>
+        </div>
+
+        <!-- Greenlandic Locale Demo -->
+        <div class="demo-section">
+            <h2>Greenlandic Locale (kl)</h2>
+            <div class="embed-code">
+                <span class="tag">&lt;script</span>
+                <span class="attr"> src</span>=<span class="value">"https://booking.gl/widget.js"</span>
+                <span class="attr"> data-business</span>=<span class="value">"deres-auto"</span>
+                <span class="attr"> data-locale</span>=<span class="value">"kl"</span>
+                <span class="tag">&gt;&lt;/script&gt;</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
