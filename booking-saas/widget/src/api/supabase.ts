@@ -92,7 +92,7 @@ export async function createBooking(
   serviceId: string,
   startTime: string,
   customer: CustomerData,
-  locale: 'da' | 'kl' | 'en' = 'da'
+  locale: 'da' | 'en' = 'da'
 ): Promise<BookingResult> {
   const { data, error } = await getSupabase()
     .rpc('create_booking', {

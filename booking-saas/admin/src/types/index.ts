@@ -10,12 +10,8 @@ export interface Business {
   phone: string | null;
   address: string | null;
   timezone: string;
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
   settings: BusinessSettings;
-  subscription_tier: 'free' | 'starter' | 'pro' | 'business';
-  stripe_customer_id: string | null;
-  monthly_booking_count: number;
-  monthly_sms_count: number;
   created_at: string;
   updated_at: string;
 }
@@ -69,7 +65,7 @@ export interface Customer {
   email: string | null;
   phone: string | null;
   preferred_contact: 'email' | 'sms' | 'both';
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
   notes: string | null;
   total_bookings: number;
   no_shows: number;
@@ -117,11 +113,3 @@ export interface Profile {
   created_at: string;
   updated_at: string;
 }
-
-// Subscription limits
-export const SUBSCRIPTION_LIMITS = {
-  free: { bookings: 25, sms: 0 },
-  starter: { bookings: 100, sms: 50 },
-  pro: { bookings: Infinity, sms: Infinity },
-  business: { bookings: Infinity, sms: Infinity },
-} as const;

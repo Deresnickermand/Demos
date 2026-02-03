@@ -11,13 +11,13 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 -- ENUM TYPES
 -- ============================================
 
-CREATE TYPE subscription_tier AS ENUM ('free', 'starter', 'pro', 'business');
+-- Subscription tiers removed - billing handled externally or not at all
 CREATE TYPE booking_status AS ENUM ('pending', 'confirmed', 'cancelled', 'completed', 'no_show');
 CREATE TYPE contact_preference AS ENUM ('email', 'sms', 'both');
 CREATE TYPE notification_type AS ENUM ('confirmation', 'reminder', 'cancellation', 'change');
 CREATE TYPE notification_channel AS ENUM ('email', 'sms');
 CREATE TYPE notification_status AS ENUM ('pending', 'sent', 'failed', 'delivered');
-CREATE TYPE locale_type AS ENUM ('da', 'kl', 'en');
+CREATE TYPE locale_type AS ENUM ('da', 'en');
 
 -- ============================================
 -- TABLE: businesses
@@ -59,12 +59,6 @@ CREATE TABLE businesses (
             "sunday": {"open": null, "close": null, "breaks": []}
         }
     }'::jsonb,
-    subscription_tier subscription_tier DEFAULT 'free',
-    stripe_customer_id VARCHAR(255),
-    stripe_subscription_id VARCHAR(255),
-    monthly_booking_count INTEGER DEFAULT 0,
-    monthly_sms_count INTEGER DEFAULT 0,
-    billing_cycle_start DATE,
     created_at TIMESTAMPTZ DEFAULT NOW(),
     updated_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -196,7 +190,6 @@ CREATE TABLE blocked_times (
 
 -- Businesses
 CREATE INDEX idx_businesses_slug ON businesses(slug);
-CREATE INDEX idx_businesses_stripe_customer ON businesses(stripe_customer_id) WHERE stripe_customer_id IS NOT NULL;
 
 -- Services
 CREATE INDEX idx_services_business ON services(business_id);
@@ -284,26 +277,6 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER update_customer_booking_stats
     AFTER INSERT OR UPDATE ON bookings
     FOR EACH ROW EXECUTE FUNCTION update_customer_stats();
-
--- ============================================
--- FUNCTION: Update monthly booking count
--- ============================================
-
-CREATE OR REPLACE FUNCTION update_business_booking_count()
-RETURNS TRIGGER AS $$
-BEGIN
-    IF TG_OP = 'INSERT' THEN
-        UPDATE businesses
-        SET monthly_booking_count = monthly_booking_count + 1
-        WHERE id = NEW.business_id;
-    END IF;
-    RETURN NEW;
-END;
-$$ LANGUAGE plpgsql;
-
-CREATE TRIGGER update_business_monthly_bookings
-    AFTER INSERT ON bookings
-    FOR EACH ROW EXECUTE FUNCTION update_business_booking_count();
 
 -- ============================================
 -- ROW LEVEL SECURITY (RLS)

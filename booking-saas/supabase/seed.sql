@@ -12,8 +12,7 @@ INSERT INTO businesses (
     address,
     timezone,
     locale,
-    settings,
-    subscription_tier
+    settings
 ) VALUES (
     'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11',
     'Deres Auto',
@@ -48,8 +47,7 @@ INSERT INTO businesses (
             "saturday": {"open": null, "close": null, "breaks": []},
             "sunday": {"open": null, "close": null, "breaks": []}
         }
-    }'::jsonb,
-    'starter'
+    }'::jsonb
 );
 
 -- Create services for Deres Auto
@@ -64,7 +62,7 @@ INSERT INTO services (business_id, name, description, duration_minutes, price, c
 -- Create some test customers
 INSERT INTO customers (id, business_id, name, email, phone, preferred_contact, locale) VALUES
 ('b1eebc99-9c0b-4ef8-bb6d-6bb9bd380a22', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Hans Jensen', 'hans@example.gl', '+299 55 12 34', 'both', 'da'),
-('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Maliina Petersen', 'maliina@example.gl', '+299 55 43 21', 'email', 'kl'),
+('c2eebc99-9c0b-4ef8-bb6d-6bb9bd380a33', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Maliina Petersen', 'maliina@example.gl', '+299 55 43 21', 'email', 'da'),
 ('d3eebc99-9c0b-4ef8-bb6d-6bb9bd380a44', 'a0eebc99-9c0b-4ef8-bb6d-6bb9bd380a11', 'Peter Olsen', 'peter@example.gl', NULL, 'email', 'da');
 
 -- Create some test bookings (for tomorrow)
@@ -107,8 +105,7 @@ INSERT INTO businesses (
     address,
     timezone,
     locale,
-    settings,
-    subscription_tier
+    settings
 ) VALUES (
     'e4eebc99-9c0b-4ef8-bb6d-6bb9bd380a55',
     'Salon Nuka',
@@ -117,7 +114,7 @@ INSERT INTO businesses (
     '+299 31 22 33',
     'Imaneq 28, 3900 Nuuk',
     'America/Godthab',
-    'kl',
+    'da',
     '{
         "branding": {
             "primary_color": "#db2777",
@@ -143,8 +140,7 @@ INSERT INTO businesses (
             "saturday": {"open": "10:00", "close": "15:00", "breaks": []},
             "sunday": {"open": null, "close": null, "breaks": []}
         }
-    }'::jsonb,
-    'free'
+    }'::jsonb
 );
 
 INSERT INTO services (business_id, name, description, duration_minutes, price, currency, display_order) VALUES

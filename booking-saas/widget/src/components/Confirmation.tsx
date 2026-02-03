@@ -10,7 +10,7 @@ interface ConfirmationProps {
   bookingId: string;
   onBookAnother: () => void;
   t: Translations;
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
 }
 
 export const Confirmation: FunctionComponent<ConfirmationProps> = ({

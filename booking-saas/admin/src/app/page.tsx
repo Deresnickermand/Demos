@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { createClient, getDashboardStats, getBookings, getBusiness } from '@/lib/supabase';
-import type { Business, Booking, DashboardStats, SUBSCRIPTION_LIMITS } from '@/types';
+import type { Business, Booking, DashboardStats } from '@/types';
 import Link from 'next/link';
 import { format, startOfDay, endOfDay } from 'date-fns';
 import { da } from 'date-fns/locale';
@@ -108,18 +108,6 @@ export default function DashboardPage() {
     );
   }
 
-  const subscriptionLimits = {
-    free: { bookings: 25, sms: 0 },
-    starter: { bookings: 100, sms: 50 },
-    pro: { bookings: Infinity, sms: Infinity },
-    business: { bookings: Infinity, sms: Infinity },
-  };
-
-  const limits = subscriptionLimits[business.subscription_tier];
-  const bookingUsage = limits.bookings === Infinity
-    ? null
-    : Math.round((business.monthly_booking_count / limits.bookings) * 100);
-
   return (
     <div>
       {/* Header */}
@@ -129,21 +117,6 @@ export default function DashboardPage() {
           {format(new Date(), "EEEE 'd.' d. MMMM yyyy", { locale: da })}
         </p>
       </div>
-
-      {/* Usage warning */}
-      {bookingUsage !== null && bookingUsage >= 80 && (
-        <div className={`mb-6 p-4 rounded-lg ${bookingUsage >= 100 ? 'bg-red-50 border border-red-200' : 'bg-yellow-50 border border-yellow-200'}`}>
-          <p className={`text-sm ${bookingUsage >= 100 ? 'text-red-700' : 'text-yellow-700'}`}>
-            {bookingUsage >= 100
-              ? `Du har nået din månedlige grænse på ${limits.bookings} bookinger. Opgrader for at modtage flere bookinger.`
-              : `Du har brugt ${business.monthly_booking_count} af ${limits.bookings} bookinger denne måned (${bookingUsage}%).`
-            }
-            <Link href="/settings" className="ml-2 underline font-medium">
-              Opgrader nu
-            </Link>
-          </p>
-        </div>
-      )}
 
       {/* Stats grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">

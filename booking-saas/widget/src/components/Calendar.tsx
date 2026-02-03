@@ -8,18 +8,16 @@ interface CalendarProps {
   onSelect: (date: Date) => void;
   onMonthChange: (year: number, month: number) => void;
   t: Translations;
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
 }
 
 const WEEKDAYS: Record<string, string[]> = {
   da: ['ma', 'ti', 'on', 'to', 'fr', 'lø', 'sø'],
-  kl: ['at', 'ma', 'pi', 'si', 'ta', 'ar', 'sa'],
   en: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
 };
 
 const MONTHS: Record<string, string[]> = {
   da: ['Januar', 'Februar', 'Marts', 'April', 'Maj', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'December'],
-  kl: ['Januari', 'Februari', 'Martsi', 'Aprili', 'Maji', 'Juni', 'Juli', 'Augustusi', 'Septemberi', 'Oktoberi', 'Novemberi', 'Decemberi'],
   en: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 };
 

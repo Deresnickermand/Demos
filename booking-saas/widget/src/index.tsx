@@ -25,7 +25,7 @@ import { initSupabase } from './api/supabase';
     businessSlug,
     theme: (currentScript.getAttribute('data-theme') as 'light' | 'dark') || 'light',
     primaryColor: currentScript.getAttribute('data-primary-color') || undefined,
-    locale: (currentScript.getAttribute('data-locale') as 'da' | 'kl' | 'en') || undefined
+    locale: (currentScript.getAttribute('data-locale') as 'da' | 'en') || undefined
   };
 
   // Optional Supabase configuration

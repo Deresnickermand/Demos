@@ -10,7 +10,7 @@ interface BookingFormProps {
   isLoading: boolean;
   error: string | null;
   t: Translations;
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
 }
 
 interface FormErrors {

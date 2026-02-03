@@ -7,7 +7,7 @@ export interface Business {
   name: string;
   slug: string;
   timezone: string;
-  locale: 'da' | 'kl' | 'en';
+  locale: 'da' | 'en';
   settings: BusinessSettings;
 }
 
@@ -87,7 +87,7 @@ export interface WidgetConfig {
   businessSlug: string;
   theme: 'light' | 'dark';
   primaryColor?: string;
-  locale?: 'da' | 'kl' | 'en';
+  locale?: 'da' | 'en';
 }
 
 // Translations
@@ -122,7 +122,7 @@ export interface Translations {
   phone_recommended: string;
 }
 
-export const translations: Record<'da' | 'kl' | 'en', Translations> = {
+export const translations: Record<'da' | 'en', Translations> = {
   da: {
     loading: 'Indlæser...',
     error_loading: 'Kunne ikke indlæse booking-widget',
@@ -152,36 +152,6 @@ export const translations: Record<'da' | 'kl' | 'en', Translations> = {
     slot_not_available: 'Tiden er desværre ikke længere ledig',
     try_again: 'Prøv igen',
     phone_recommended: '(anbefalet for SMS-påmindelse)'
-  },
-  kl: {
-    loading: 'Atorneqarpoq...',
-    error_loading: 'Booking-widget atuarneqarsinnaanngilaq',
-    select_service: 'Sullissinermut toqqakkit',
-    select_date: 'Ulloq toqqakkit',
-    select_time: 'Piffissaq toqqakkit',
-    your_details: 'Illit pillutit',
-    name: 'Ateq',
-    email: 'E-mail',
-    phone: 'Oqarasuaat',
-    notes: 'Nalunaarutit',
-    book_now: 'Booking-lerit',
-    booking: 'Booking-lerpoq...',
-    back: 'Utimut',
-    morning: 'Ullaaq',
-    afternoon: 'Unnukkut',
-    duration: 'Sivisuneq',
-    minutes: 'min',
-    price: 'Akit',
-    free: 'Akiliisoqanngilaq',
-    confirmation_title: 'Booking uppernarsarneqarpoq!',
-    confirmation_message: 'E-mail-ikkut uppernarsaat piumaarpatit',
-    add_to_calendar: 'Ullunik nalunaarsuiffimmut ilakkit',
-    book_another: 'Piffissamik allam booking-lerit',
-    required_field: 'Una allanngorneqartariaqarpoq',
-    invalid_email: 'E-mail atuuttut allanngukkit',
-    slot_not_available: 'Piffissaq taanna attorneqarsinnaanngilaq',
-    try_again: 'Misileqqigit',
-    phone_recommended: '(SMS-mik eqqaamanermi ilanngussaq)'
   },
   en: {
     loading: 'Loading...',

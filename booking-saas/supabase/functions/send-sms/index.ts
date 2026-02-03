@@ -13,24 +13,21 @@ interface SmsRequest {
   to: string; // E.164 format
   template_type: 'confirmation' | 'reminder' | 'cancellation';
   booking_id: string;
-  locale?: 'da' | 'kl' | 'en';
+  locale?: 'da' | 'en';
 }
 
 // SMS templates (max 160 chars each)
 const templates = {
   confirmation: {
     da: 'Tid booket: {{service}} d. {{date}} kl. {{time}} hos {{business}}. Afbud: {{url}}',
-    kl: 'Booking: {{service}} {{date}} {{time}} {{business}}-mi. Peeruk: {{url}}',
     en: 'Booked: {{service}} on {{date}} at {{time}} at {{business}}. Cancel: {{url}}',
   },
   reminder: {
     da: 'Husk din tid hos {{business}} i morgen kl. {{time}}. Afbud: {{url}}',
-    kl: 'Eqqaamajuk: {{business}}-mi aqagu {{time}}. Peeruk: {{url}}',
     en: 'Reminder: Your appointment at {{business}} tomorrow at {{time}}. Cancel: {{url}}',
   },
   cancellation: {
     da: 'Din tid hos {{business}} d. {{date}} kl. {{time}} er aflyst.',
-    kl: '{{business}}-mi {{date}} {{time}} peerneqarpoq.',
     en: 'Your appointment at {{business}} on {{date}} at {{time}} has been cancelled.',
   },
 };
@@ -92,23 +89,10 @@ serve(async (req) => {
       throw new Error(`Booking not found: ${booking_id}`);
     }
 
-    // Check if business has SMS enabled and has SMS quota
+    // Check if business has SMS enabled
     const business = booking.business;
     if (!business.settings?.notifications?.sms_enabled) {
       return new Response(JSON.stringify({ success: false, reason: 'SMS not enabled' }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    // Check SMS quota for non-pro plans
-    if (business.subscription_tier === 'free') {
-      return new Response(JSON.stringify({ success: false, reason: 'Free plan does not include SMS' }), {
-        headers: { 'Content-Type': 'application/json' },
-      });
-    }
-
-    if (business.subscription_tier === 'starter' && business.monthly_sms_count >= 50) {
-      return new Response(JSON.stringify({ success: false, reason: 'SMS quota exceeded' }), {
         headers: { 'Content-Type': 'application/json' },
       });
     }
@@ -183,12 +167,6 @@ serve(async (req) => {
       external_id: elksData.id,
       sent_at: new Date().toISOString(),
     });
-
-    // Update SMS counter
-    await supabase
-      .from('businesses')
-      .update({ monthly_sms_count: business.monthly_sms_count + 1 })
-      .eq('id', business.id);
 
     return new Response(JSON.stringify({
       success: true,

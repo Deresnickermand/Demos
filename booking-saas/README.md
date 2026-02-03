@@ -4,9 +4,8 @@ A complete SaaS booking system designed for the Greenlandic market, featuring:
 
 - **Embeddable widget** for easy integration on any website
 - **Admin dashboard** for business management
-- **Multi-language support** (Danish, Greenlandic, English)
+- **Multi-language support** (Danish, English)
 - **Email & SMS notifications** via Resend and 46elks
-- **Stripe billing** for subscription management
 
 ## Project Structure
 
@@ -19,9 +18,7 @@ booking-saas/
 │   │   ├── send-sms/        # SMS notifications (46elks)
 │   │   ├── process-reminders/ # Cron job for reminders
 │   │   ├── handle-booking-created/ # Webhook handler
-│   │   ├── cancel-booking/  # Customer cancellation page
-│   │   ├── stripe-webhook/  # Stripe webhook handler
-│   │   └── create-checkout-session/ # Stripe checkout
+│   │   └── cancel-booking/  # Customer cancellation page
 │   └── seed.sql             # Test data
 ├── widget/                   # Embeddable Preact widget
 │   ├── src/
@@ -62,8 +59,6 @@ Create `.env` files in each project:
 RESEND_API_KEY=re_xxxxx
 ELKS_API_USER=uxxxxx
 ELKS_API_PASSWORD=xxxxx
-STRIPE_SECRET_KEY=sk_xxxxx
-STRIPE_WEBHOOK_SECRET=whsec_xxxxx
 SITE_URL=https://admin.booking.gl
 ```
 
@@ -116,18 +111,9 @@ Add this script tag to any website:
   data-business="your-business-slug"
   data-theme="dark"
   data-primary-color="#db2777"
-  data-locale="kl"
+  data-locale="en"
 ></script>
 ```
-
-## Subscription Tiers
-
-| Tier | Price (DKK) | Bookings/month | SMS/month |
-|------|-------------|----------------|-----------|
-| Free | 0 | 25 | 0 |
-| Starter | 149 | 100 | 50 |
-| Pro | 349 | Unlimited | Unlimited |
-| Business | 699 | Unlimited | Unlimited |
 
 ## API Reference
 
@@ -148,12 +134,10 @@ Add this script tag to any website:
 - `GET /process-reminders` - Cron job (hourly)
 - `POST /handle-booking-created` - Webhook for new bookings
 - `GET/POST /cancel-booking` - Customer cancellation page
-- `POST /create-checkout-session` - Create Stripe checkout
-- `POST /stripe-webhook` - Handle Stripe events
 
 ## Cron Jobs
 
-Set up the following cron jobs in Supabase:
+Set up the following cron job in Supabase:
 
 ```sql
 -- Process reminders every hour
@@ -164,13 +148,6 @@ SELECT cron.schedule(
     url := 'https://your-project.supabase.co/functions/v1/process-reminders',
     headers := '{"Authorization": "Bearer YOUR_SERVICE_KEY"}'::jsonb
   );$$
-);
-
--- Reset monthly counters on 1st of month
-SELECT cron.schedule(
-  'reset-monthly-counters',
-  '0 0 1 * *',
-  $$SELECT reset_monthly_counters();$$
 );
 ```
 

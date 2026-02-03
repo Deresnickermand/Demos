@@ -285,11 +285,9 @@ DECLARE
     v_business RECORD;
     v_slot_available BOOLEAN;
 BEGIN
-    -- Validate business exists and get subscription info
+    -- Validate business exists
     SELECT
         b.id,
-        b.subscription_tier,
-        b.monthly_booking_count,
         b.settings
     INTO v_business
     FROM businesses b
@@ -299,21 +297,6 @@ BEGIN
         success := false;
         error_code := 'BUSINESS_NOT_FOUND';
         error_message := 'Virksomheden blev ikke fundet';
-        RETURN NEXT;
-        RETURN;
-    END IF;
-
-    -- Check subscription limits
-    IF v_business.subscription_tier = 'free' AND v_business.monthly_booking_count >= 25 THEN
-        success := false;
-        error_code := 'LIMIT_REACHED';
-        error_message := 'Virksomheden har nået sin månedlige booking-grænse';
-        RETURN NEXT;
-        RETURN;
-    ELSIF v_business.subscription_tier = 'starter' AND v_business.monthly_booking_count >= 100 THEN
-        success := false;
-        error_code := 'LIMIT_REACHED';
-        error_message := 'Virksomheden har nået sin månedlige booking-grænse';
         RETURN NEXT;
         RETURN;
     END IF;
@@ -635,20 +618,3 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
--- ============================================
--- FUNCTION: reset_monthly_counters
--- Called by cron on 1st of month
--- ============================================
-
-CREATE OR REPLACE FUNCTION reset_monthly_counters()
-RETURNS VOID AS $$
-BEGIN
-    UPDATE businesses
-    SET
-        monthly_booking_count = 0,
-        monthly_sms_count = 0,
-        billing_cycle_start = CURRENT_DATE
-    WHERE billing_cycle_start IS NULL
-       OR billing_cycle_start < DATE_TRUNC('month', CURRENT_DATE);
-END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;

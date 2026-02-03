@@ -12,7 +12,7 @@ interface EmailRequest {
   to: string;
   template_type: 'confirmation' | 'reminder' | 'cancellation' | 'change';
   booking_id: string;
-  locale?: 'da' | 'kl' | 'en';
+  locale?: 'da' | 'en';
 }
 
 interface BookingData {
@@ -65,25 +65,6 @@ const templates = {
         </div>
       `,
     },
-    kl: {
-      subject: '{{business_name}}-mi booking uppernarsarneqarpoq',
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #1f2937; font-size: 24px;">Piffissaq booking-lerneqarpoq!</h1>
-          <p style="color: #4b5563;">Hej {{customer_name}},</p>
-          <p style="color: #4b5563;"><strong>{{business_name}}</strong>-mi booking uppernarsarpavut.</p>
-
-          <div style="background: #f9fafb; border-radius: 8px; padding: 20px; margin: 20px 0;">
-            <p style="margin: 0 0 10px;"><strong>Sullissinneq:</strong> {{service_name}}</p>
-            <p style="margin: 0 0 10px;"><strong>Ulloq:</strong> {{date}}</p>
-            <p style="margin: 0 0 10px;"><strong>Piffissaq:</strong> {{time}}</p>
-            <p style="margin: 0;"><strong>Sivisuneq:</strong> {{duration}} minutsit</p>
-          </div>
-
-          <a href="{{cancellation_url}}" style="display: inline-block; background: #ef4444; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Booking peeruk</a>
-        </div>
-      `,
-    },
     en: {
       subject: 'Booking confirmed at {{business_name}}',
       html: `
@@ -122,24 +103,6 @@ const templates = {
 
           <p style="color: #4b5563;">Kan du ikke komme? Aflys venligst så tidligt som muligt:</p>
           <a href="{{cancellation_url}}" style="display: inline-block; background: #ef4444; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Aflys booking</a>
-        </div>
-      `,
-    },
-    kl: {
-      subject: '{{business_name}}-mi piffissaq eqqaamauk',
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #1f2937; font-size: 24px;">Booking eqqaamaneq</h1>
-          <p style="color: #4b5563;">Hej {{customer_name}},</p>
-          <p style="color: #4b5563;"><strong>{{business_name}}</strong>-mi aqagu piffissaq eqqaamaruk.</p>
-
-          <div style="background: #f9fafb; border-radius: 8px; padding: 20px; margin: 20px 0;">
-            <p style="margin: 0 0 10px;"><strong>Sullissinneq:</strong> {{service_name}}</p>
-            <p style="margin: 0 0 10px;"><strong>Ulloq:</strong> {{date}}</p>
-            <p style="margin: 0;"><strong>Piffissaq:</strong> {{time}}</p>
-          </div>
-
-          <a href="{{cancellation_url}}" style="display: inline-block; background: #ef4444; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px;">Booking peeruk</a>
         </div>
       `,
     },
@@ -183,22 +146,6 @@ const templates = {
         </div>
       `,
     },
-    kl: {
-      subject: '{{business_name}}-mi booking peerneqarpoq',
-      html: `
-        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #1f2937; font-size: 24px;">Booking peerneqarpoq</h1>
-          <p style="color: #4b5563;">Hej {{customer_name}},</p>
-          <p style="color: #4b5563;"><strong>{{business_name}}</strong>-mi booking peerneqarpoq.</p>
-
-          <div style="background: #fef2f2; border-radius: 8px; padding: 20px; margin: 20px 0;">
-            <p style="margin: 0 0 10px;"><strong>Sullissinneq:</strong> {{service_name}}</p>
-            <p style="margin: 0 0 10px;"><strong>Ulloq:</strong> {{date}}</p>
-            <p style="margin: 0;"><strong>Piffissaq:</strong> {{time}}</p>
-          </div>
-        </div>
-      `,
-    },
     en: {
       subject: 'Your booking at {{business_name}} has been cancelled',
       html: `
@@ -238,10 +185,6 @@ const templates = {
         </div>
       `,
     },
-    kl: {
-      subject: '{{business_name}}-mi booking allanngorneqarpoq',
-      html: `<div>Booking allanngorneqarpoq</div>`,
-    },
     en: {
       subject: 'Your booking at {{business_name}} has been changed',
       html: `<div>Booking changed</div>`,
@@ -257,7 +200,7 @@ function formatDate(dateStr: string, locale: string): string {
     month: 'long',
     year: 'numeric',
   };
-  return date.toLocaleDateString(locale === 'kl' ? 'da-DK' : locale, options);
+  return date.toLocaleDateString(locale === 'da' ? 'da-DK' : 'en-US', options);
 }
 
 function formatTime(dateStr: string): string {

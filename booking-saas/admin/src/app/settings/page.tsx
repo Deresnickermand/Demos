@@ -464,19 +464,15 @@ export default function SettingsPage() {
                   <div>
                     <p className="font-medium">SMS notifikationer</p>
                     <p className="text-sm text-gray-500">Send påmindelser via SMS (ekstra betaling)</p>
-                    {business.subscription_tier === 'free' && (
-                      <p className="text-sm text-orange-600 mt-1">Kræver Starter plan eller højere</p>
-                    )}
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
                       type="checkbox"
                       checked={notificationsForm.sms_enabled}
                       onChange={(e) => setNotificationsForm({ ...notificationsForm, sms_enabled: e.target.checked })}
-                      disabled={business.subscription_tier === 'free'}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600 peer-disabled:opacity-50"></div>
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
                   </label>
                 </div>
                 <div>
@@ -575,8 +571,8 @@ export default function SettingsPage() {
                         <td className="py-2">Tilpas primær farve</td>
                       </tr>
                       <tr className="border-b">
-                        <td className="py-2 font-mono text-xs">data-locale="kl"</td>
-                        <td className="py-2">Skift sprog (da, kl, en)</td>
+                        <td className="py-2 font-mono text-xs">data-locale="en"</td>
+                        <td className="py-2">Skift sprog (da, en)</td>
                       </tr>
                     </tbody>
                   </table>
