@@ -1,15 +1,9 @@
-import { createClientComponentClient, createServerComponentClient } from '@supabase/auth-helpers-nextjs';
-import { cookies } from 'next/headers';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 import type { Business, Service, Customer, Booking, DashboardStats, Profile } from '@/types';
 
 // Client-side Supabase client
 export function createClient() {
   return createClientComponentClient();
-}
-
-// Server-side Supabase client
-export function createServerClient() {
-  return createServerComponentClient({ cookies });
 }
 
 // ============================================
