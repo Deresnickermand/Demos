@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="da">
+  <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=1920, initial-scale=1.0">
+        <title>Deres Auto - Hotel Aurora Infoskærm</title>
+      <style>
+                * { margin: 0; padding: 0; box-sizing: border-box; }
+                body {
+                              width: 1920px;
+                              height: 1080px;
+                              overflow: hidden;
+                              background: #030a1a;
+                              font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+                              color: white;
+                }
+                /* ---- AURORA NORTHERN LIGHTS ---- */
+                .aurora-container {
+                              position: fixed;
+                              top: 0; left: 0;
+                              width: 100%; height: 100%;
+                              pointer-events: none;
+                              z-index: 0;
+                              overflow: hidden;
+                }
+                .aurora-band {
+                              position: absolute;
+                              width: 250%;
+                              height: 35%;
+                              border-radius: 50%;
+                              filter: blur(50px);
+                              opacity: 0;
+                }
+                .aurora-band:nth-child(1) {
+                              background: linear-gradient(90deg, transparent 0%, #00ff88 20%, #00ffcc 50%, #00ccff 80%, transparent 100%);
+                              top: 5%; left: -75%;
+                              animation: aurora1 9s ease-in-out infinite;
+                }
+                .aurora-band:nth-child(2) {
+                              background: linear-gradient(90deg, transparent 0%, #0066ff 25%, #00ff99 55%, #88ff00 85%, transparent 100%);
+                              top: 12%; left: -50%;
+                              animation: aurora2 14s ease-in-out infinite;
+                }
+                .aurora-band:nth-child(3) {
+                              background: linear-gradient(90deg, transparent 0%, #cc00ff 30%, #0099ff 60%, transparent 100%);
+                              top: 0%; left: -60%;
+                              animation: aurora3 11s ease-in-out infinite;
+                }
+                .aurora-band:nth-child(4) {
+                              background: linear-gradient(90deg, transparent 0%, #00ffcc 20%, #ff00aa 50%, #00ccff 80%, transparent 100%);
+                              top: 18%; left: -80%;
+                              animation: aurora4 16s ease-in-out infinite;
+                }
+                @keyframes aurora1 {
+                              0%   { opacity: 0;   transform: translateX(0%)   scaleY(1); }
+                              20%  { opacity: 0.45; }
+                              50%  { opacity: 0.5;  transform: translateX(18%)  scaleY(1.6); }
+                              80%  { opacity: 0.4; }
+                              100% { opacity: 0;   transform: translateX(0%)   scaleY(1); }
+                }
+                @keyframes aurora2 {
+                              0%   { opacity: 0;    transform: translateX(0%)   scaleY(1); }
+                              15%  { opacity: 0.35; }
+                              40%  { opacity: 0.4;  transform: translateX(-12%) scaleY(2); }
+                              70%  { opacity: 0.3;  transform: translateX(22%)  scaleY(0.9); }
+                              100% { opacity: 0;    transform: translateX(0%)   scaleY(1); }
+                }
+                @keyframes aurora3 {
+                              0%   { opacity: 0;    transform: translateX(0%)   scaleY(1); }
+                              25%  { opacity: 0.25; }
+                              55%  { opacity: 0.3;  transform: translateX(28%)  scaleY(1.9); }
+                              100% { opacity: 0;    transform: translateX(0%)   scaleY(1); }
+                }
+                @keyframes aurora4 {
+                              0%   { opacity: 0;    transform: translateX(0%)  scaleY(1); }
+                              30%  { opacity: 0.2; }
+                              60%  { opacity: 0.25; transform: translateX(15%) scaleY(1.4); }
+                              100% { opacity: 0;    transform: translateX(0%)  scaleY(1); }
+                }
+                /* ---- STARS ---- */
+                .stars {
+                              position: fixed;
+                              top: 0; left: 0;
+                              width: 100%; height: 55%;
+                              pointer-events: none;
+                              z-index: 0;
+                              background-image:
+                                                radial-gradient(1px 1px at 8%  12%, rgba(255,255,255,0.9) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 22% 6%,  rgba(255,255,255,0.7) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 38% 18%, rgba(255,255,255,0.8) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 55% 4%,  rgba(255,255,255,0.6) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 67% 22%, rgba(255,255,255,0.9) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 80% 9%,  rgba(255,255,255,0.7) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 92% 16%, rgba(255,255,255,0.8) 0%, transparent 100%),
+                                                radial-gradient(2px 2px at 14% 35%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 48% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 73% 38%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                                                radial-gradient(2px 2px at 5%  48%, rgba(255,255,255,0.4) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 30% 44%, rgba(255,255,255,0.5) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 88% 42%, rgba(255,255,255,0.6) 0%, transparent 100%),
+                                                radial-gradient(1px 1px at 60% 50%, rgba(255,255,255,0.4) 0%, transparent 100%);
+                }
+                /* ---- PROGRESS BAR ---- */
+                .progress-bar {
+                              position: fixed;
+                              bottom: 0; left: 0;
+                              height: 6px;
+                              background: linear-gradient(90deg, #00ff88, #00ccff, #0066ff);
+                              z-index: 200;
+                              width: 0%;
+                }
+                .progress-bar.animating {
+                              animation: progressAnim 8s linear forwards;
+                }
+                @keyframes progressAnim {
+                              from { width: 0%; }
+                              to   { width: 100%; }
+                }
+                /* ---- DOTS ---- */
+                .dots {
+                              position: fixed;
+                              bottom: 18px;
+                              left: 50%;
+                              transform: translateX(-50%);
+                              display: flex;
+                              gap: 12px;
+                              z-index: 200;
+                }
+                .dot {
+                              width: 10px; height: 10px;
+                              border-radius: 50%;
+                              background: rgba(255,255,255,0.3);
+                              cursor: pointer;
+                              transition: all 0.4s ease;
+                }
+                .dot.active {
+                              background: #00ff88;
+                              transform: scale(1.4);
+                              box-shadow: 0 0 10px #00ff88;
+                }
+                /* ---- SLIDE BASE ---- */
+                .slideshow { position: relative; width: 100%; height: 100%; z-index: 1; }
+                .slide {
+                              position: absolute;
+                              top: 0; left: 0;
+                              width: 100%; height: 100%;
+                              opacity: 0;
+                              transition: opacity 1.2s ease-in-out;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                }
+                .slide.active { opacity: 1; }
+                /* ---- BRAND CORNER ---- */
+                .brand-corner {
+                              position: absolute;
+                              top: 38px; left: 55px;
+                              display: flex;
+                              align-items: center;
+                              gap: 12px;
+                              z-index: 10;
+                }
+                .brand-dot {
+                              width: 9px; height: 9px;
+                              border-radius: 50%;
+                              background: #00ff88;
+                              box-shadow: 0 0 8px #00ff88;
+                              animation: blinkDot 2s ease-in-out infinite;
+                }
+                @keyframes blinkDot { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+                .brand-name {
+                              font-size: 26px;
+                              font-weight: 800;
+                              letter-spacing: 0.12em;
+                              text-transform: uppercase;
+                              color: white;
+                }
+                .slide-num {
+                              position: absolute;
+                              top: 38px; right: 55px;
+                              font-size: 17px;
+                              color: rgba(255,255,255,0.3);
+                              letter-spacing: 0.2em;
+                              z-index: 10;
+                }
+                /* ---- SLIDE 1: HERO ---- */
+                .hero-slide {
+                              flex-direction: column;
+                              text-align: center;
+                              background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,5,25,0.75) 100%);
+                }
+                .hero-logo {
+                              font-size: 110px;
+                              font-weight: 900;
+                              letter-spacing: 0.08em;
+                              text-transform: uppercase;
+                              line-height: 1;
+                              background: linear-gradient(135deg, #ffffff 0%, #00ff88 60%, #00ccff 100%);
+                              -webkit-background-clip: text;
+                              -webkit-text-fill-color: transparent;
+                              background-clip: text;
+                              animation: slideUp 1.4s ease-out both;
+                }
+                .hero-sub {
+                              font-size: 42px;
+                              color: #00ccff;
+                              letter-spacing: 0.35em;
+                              text-transform: uppercase;
+                              margin-top: 22px;
+                              animation: slideUp 1.4s ease-out 0.25s both;
+                }
+                .hero-tagline {
+                              font-size: 28px;
+                              color: rgba(255,255,255,0.65);
+                              margin-top: 28px;
+                              animation: slideUp 1.4s ease-out 0.5s both;
+                }
+                @keyframes slideUp {
+                              from { opacity: 0; transform: translateY(50px); }
+                              to   { opacity: 1; transform: translateY(0); }
+                }
+                .hero-lights {
+                              position: absolute;
+                              bottom: 130px;
+                              left: 50%;
+                              transform: translateX(-50%);
+                              display: flex;
+                              gap: 900px;
+                              animation: lightPulse 3.5s ease-in-out infinite;
+                }
+                .headlight {
+                              width: 90px; height: 90px;
+                              background: radial-gradient(circle, #ffffff 0%, #ffffaa 25%, rgba(255,255,200,0.15) 65%, transparent 100%);
+                              border-radius: 50%;
+                              filter: blur(4px);
+                }
+                @keyframes lightPulse { 0%,100%{opacity:0.55;} 50%{opacity:1;} }
+                .hero-ground {
+                              position: absolute;
+                              bottom: 0; left: 0;
+                              width: 100%; height: 280px;
+                              background: linear-gradient(180deg, transparent, rgba(0,8,30,0.9));
+                }
+                /* ---- CAR SLIDES ---- */
+                .car-slide {
+                              flex-direction: row;
+                              padding: 90px 80px;
+                              gap: 80px;
+                              background: linear-gradient(135deg, rgba(0,5,22,0.92) 0%, rgba(0,18,45,0.88) 100%);
+                }
+                .car-info { flex: 1; z-index: 5; }
+                .car-badge {
+                              display: inline-block;
+                              background: linear-gradient(135deg, #00ff88, #00ccff);
+                              color: #000;
+                              font-size: 19px;
+                              font-weight: 800;
+                              padding: 9px 24px;
+                              border-radius: 30px;
+                              text-transform: uppercase;
+                              letter-spacing: 0.08em;
+                              margin-bottom: 22px;
+                }
+                .car-name {
+                              font-size: 76px;
+                              font-weight: 900;
+                              line-height: 1;
+                              margin-bottom: 14px;
+                              text-shadow: 0 0 40px rgba(0,255,136,0.25);
+                }
+                .car-subtitle {
+                              font-size: 34px;
+                              color: #00ccff;
+                              margin-bottom: 28px;
+                              font-weight: 300;
+                              letter-spacing: 0.05em;
+                }
+                .car-desc {
+                              font-size: 23px;
+                              color: rgba(255,255,255,0.72);
+                              line-height: 1.65;
+                              margin-bottom: 38px;
+                              max-width: 620px;
+                }
+                .car-price { display: flex; align-items: baseline; gap: 12px; }
+                .price-num {
+                              font-size: 88px;
+                              font-weight: 900;
+                              color: #00ff88;
+                              text-shadow: 0 0 25px rgba(0,255,136,0.45);
+                              line-height: 1;
+                }
+                .price-unit {
+                              font-size: 30px;
+                              color: rgba(255,255,255,0.55);
+                              font-weight: 300;
+                }
+                .car-tags {
+                              display: flex;
+                              gap: 14px;
+                              margin-top: 28px;
+                              flex-wrap: wrap;
+                }
+                .car-tag {
+                              background: rgba(0,255,136,0.08);
+                              border: 1px solid rgba(0,255,136,0.28);
+                              color: #00ff88;
+                              padding: 9px 20px;
+                              border-radius: 22px;
+                              font-size: 18px;
+                              font-weight: 500;
+                }
+                .car-visual {
+                              flex: 1.3;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              position: relative;
+                }
+                .car-img {
+                              width: 100%;
+                              max-height: 620px;
+                              object-fit: contain;
+                              filter: drop-shadow(0 25px 50px rgba(0,200,255,0.18));
+                              animation: floatAnim 4.5s ease-in-out infinite;
+                }
+                @keyframes floatAnim {
+                              0%,100% { transform: translateY(0px); }
+                              50%      { transform: translateY(-22px); }
+                }
+                .car-glow-floor {
+                              position: absolute;
+                              bottom: 30px; left: 50%;
+                              transform: translateX(-50%);
+                              width: 75%;
+                              height: 50px;
+                              background: radial-gradient(ellipse at center, rgba(0,255,136,0.28), transparent 70%);
+                              filter: blur(18px);
+                              animation: glowFloor 4.5s ease-in-out infinite;
+                }
+                @keyframes glowFloor {
+                              0%,100% { opacity:0.3; transform:translateX(-50%) scaleX(0.85); }
+                              50%      { opacity:0.8; transform:translateX(-50%) scaleX(1.15); }
+                }
+                .car-emoji-fallback {
+                              font-size: 220px;
+                              line-height: 1;
+                              filter: drop-shadow(0 20px 40px rgba(0,200,255,0.3));
+                              animation: floatAnim 4.5s ease-in-out infinite;
+                }
+                /* ---- QR SLIDE ---- */
+                .qr-slide {
+                              flex-direction: column;
+                              text-align: center;
+                              gap: 38px;
+                              background: linear-gradient(135deg, rgba(0,5,22,0.92), rgba(0,18,45,0.88));
+                }
+                .qr-title {
+                              font-size: 68px;
+                              font-weight: 900;
+                              background: linear-gradient(135deg, #ffffff, #00ff88);
+                              -webkit-background-clip: text;
+                              -webkit-text-fill-color: transparent;
+                              background-clip: text;
+                }
+                .qr-sub { font-size: 32px; color: #00ccff; font-weight: 300; }
+                .qr-box {
+                              width: 290px; height: 290px;
+                              background: white;
+                              border-radius: 22px;
+                              display: flex;
+                              align-items: center;
+                              justify-content: center;
+                              padding: 18px;
+                              box-shadow: 0 0 70px rgba(0,255,136,0.35), 0 0 140px rgba(0,255,136,0.1);
+                              align-self: center;
+                }
+                .qr-url {
+                              font-size: 42px;
+                              color: #00ff88;
+                              font-weight: 800;
+                              letter-spacing: 0.05em;
+                              text-shadow: 0 0 20px rgba(0,255,136,0.4);
+                }
+                .qr-cta { font-size: 26px; color: rgba(255,255,255,0.6); }
+                /* divider line */
+                .divider {
+                              width: 80px; height: 3px;
+                              background: linear-gradient(90deg, #00ff88, #00ccff);
+                              border-radius: 2px;
+                              margin: 8px 0 16px;
+                }
+            </style>
+  </head>
+  <body>
+
+    <!-- Northern Lights -->
+    <div class="aurora-container">
+          <div class="aurora-band"></div>div>
+          <div class="aurora-band"></div>div>
+          <div class="aurora-band"></div>div>
+          <div class="aurora-band"></div>div>
+    </div>div>
+    <div class="stars"></div>div>
+
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>div>
+
+    <!-- Navigation Dots -->
+    <div class="dots" id="dots"></div>div>
+
+    <!-- ======================== SLIDESHOW ======================== -->
+    <div class="slideshow">
+
+          <!-- SLIDE 1: HERO -->
+          <div class="slide hero-slide active" id="slide-0">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="hero-logo">Deres Auto</div>div>
+                    <div class="hero-sub">Billeje i Grønland</div>div>
+                    <div class="divider" style="align-self:center;margin:18px auto;"></div>div>
+                    <div class="hero-tagline">Oplev Grønland bag rattet &mdash; Fra Nuuk Lufthavn</div>div>
+                    <div class="hero-lights">
+                                  <div class="headlight"></div>div>
+                                  <div class="headlight"></div>div>
+                    </div>div>
+                    <div class="hero-ground"></div>div>
+                    <div class="slide-num">01 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 2: Mitsubishi Outlander -->
+          <div class="slide car-slide" id="slide-1">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#11088; Bestseller</div>div>
+                                  <div class="car-name">Mitsubishi<br>Outlander</div>div>
+                                  <div class="car-subtitle">4WD SUV &bull; 7 Sæder</div>div>
+                                  <div class="car-desc">Den ultimative Grønlands-bil. Med kraftfuld 4WD og rummelig kabine er Outlander det perfekte valg til alle vejr- og terrænforhold i Nuuk og omegn.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">950</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">4WD</span>span>
+                                                    <span class="car-tag">7 sæder</span>span>
+                                                    <span class="car-tag">Automatgear</span>span>
+                                                    <span class="car-tag">Klimaanlæg</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/outlander.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Mitsubishi Outlander">
+                                  <div class="car-emoji-fallback" style="display:none">&#128665;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">02 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 3: Porsche Cayenne -->
+          <div class="slide car-slide" id="slide-2">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#10024; Luksus</div>div>
+                                  <div class="car-name">Porsche<br>Cayenne</div>div>
+                                  <div class="car-subtitle">Premium AWD SUV</div>div>
+                                  <div class="car-desc">Oplev Grønland i absolut luksus. Porsche Cayenne forener sportspræstationer med ultimativ komfort &mdash; dit nordlige eventyr i verdensklasse.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">950</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">AWD</span>span>
+                                                    <span class="car-tag">Panoramatag</span>span>
+                                                    <span class="car-tag">Sport mode</span>span>
+                                                    <span class="car-tag">Premium lyd</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/cayenne.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Porsche Cayenne">
+                                  <div class="car-emoji-fallback" style="display:none">&#128663;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">03 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 4: Mercedes GLC 350e -->
+          <div class="slide car-slide" id="slide-3">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#127807; Hybrid Luksus</div>div>
+                                  <div class="car-name">Mercedes<br>GLC 350e</div>div>
+                                  <div class="car-subtitle">Plug-in Hybrid &bull; 4MATIC</div>div>
+                                  <div class="car-desc">Det bedste fra to verdener. Mercedes GLC 350e kombinerer luksus og bæredygtighed med sin avancerede plug-in hybrid teknologi og intelligent 4MATIC drivlinje.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">950</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">Hybrid</span>span>
+                                                    <span class="car-tag">4MATIC</span>span>
+                                                    <span class="car-tag">El-rækkevidde</span>span>
+                                                    <span class="car-tag">MBUX</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/glc350e.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Mercedes GLC 350e">
+                                  <div class="car-emoji-fallback" style="display:none">&#128663;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">04 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 5: Hyundai Tucson -->
+          <div class="slide car-slide" id="slide-4">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#127956; 4WD Familiebil</div>div>
+                                  <div class="car-name">Hyundai<br>Tucson</div>div>
+                                  <div class="car-subtitle">4WD SUV &bull; 5 Sæder</div>div>
+                                  <div class="car-desc">Perfekt til familien og eventyrerne. Hyundai Tucson er robust, pålidelig og klar til Grønlands udfordringer med 4WD, moderne infotainment og praktisk kabine.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">835</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">4WD</span>span>
+                                                    <span class="car-tag">5 sæder</span>span>
+                                                    <span class="car-tag">Android Auto</span>span>
+                                                    <span class="car-tag">Bakvisning</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/tucson.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Hyundai Tucson">
+                                  <div class="car-emoji-fallback" style="display:none">&#128665;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">05 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 6: NAvor E5 Rock -->
+          <div class="slide car-slide" id="slide-5">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#9889; Grønlands Elbil</div>div>
+                                  <div class="car-name">NAvor<br>E5 Rock</div>div>
+                                  <div class="car-subtitle">Elektrisk SUV &bull; 4WD</div>div>
+                                  <div class="car-desc">Kør grønt i Grønland. NAvor E5 Rock er Grønlands svar på den elektriske SUV &mdash; bygget til det arktiske klima og Nuuks veje med imponerende rækkevidde.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">700</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">&#9889; Elektrisk</span>span>
+                                                    <span class="car-tag">4WD</span>span>
+                                                    <span class="car-tag">Arktisk pakke</span>span>
+                                                    <span class="car-tag">Hurtiglader</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/navor-e5-rock.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="NAvor E5 Rock">
+                                  <div class="car-emoji-fallback" style="display:none">&#128663;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">06 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 7: Skoda Karoq -->
+          <div class="slide car-slide" id="slide-6">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="car-info">
+                                  <div class="car-badge">&#127956; 4x4 Eventyr</div>div>
+                                  <div class="car-name">Skoda<br>Karoq</div>div>
+                                  <div class="car-subtitle">4x4 Kompakt SUV</div>div>
+                                  <div class="car-desc">Kompakt, agil og kraftfuld. Skoda Karoq er ideel til Nuuks gader og de storslåede omgivelser &mdash; med 4x4 drivlinje klar til alle eventyr i Grønland.</div>div>
+                                  <div class="car-price">
+                                                    <span class="price-num">700</span>span>
+                                                    <span class="price-unit">kr. / dag</span>span>
+                                  </div>div>
+                                  <div class="car-tags">
+                                                    <span class="car-tag">4x4</span>span>
+                                                    <span class="car-tag">DSG gear</span>span>
+                                                    <span class="car-tag">Virtual Cockpit</span>span>
+                                                    <span class="car-tag">Cruise control</span>span>
+                                  </div>div>
+                    </div>div>
+                    <div class="car-visual">
+                                  <img class="car-img" src="https://bilcenter.gl/wp-content/uploads/karoq.jpg" onerror="this.style.display='none';this.nextElementSibling.style.display='block';" alt="Skoda Karoq">
+                                  <div class="car-emoji-fallback" style="display:none">&#128665;</div>div>
+                                  <div class="car-glow-floor"></div>div>
+                    </div>div>
+                    <div class="slide-num">07 / 08</div>div>
+          </div>div>
+
+          <!-- SLIDE 8: QR Code -->
+          <div class="slide qr-slide" id="slide-7">
+                    <div class="brand-corner"><div class="brand-dot"></div>div><span class="brand-name">Deres Auto</span>span></div>div>
+                    <div class="qr-title">Book din bil nu</div>div>
+                    <div class="qr-sub">Scan QR-koden og book direkte online</div>div>
+                    <div class="qr-box">
+                                  <svg width="250" height="250" viewBox="0 0 250 250" xmlns="http://www.w3.org/2000/svg">
+                                                    <rect width="250" height="250" fill="white"/>
+                                                    <!-- Top-left finder -->
+                                                    <rect x="10" y="10" width="70" height="70" fill="none" stroke="#000" stroke-width="7"/>
+                                                    <rect x="22" y="22" width="46" height="46" fill="#000"/>
+                                                    <rect x="31" y="31" width="28" height="28" fill="white"/>
+                                                    <rect x="40" y="40" width="10" height="10" fill="#000"/>
+                                                    <!-- Top-right finder -->
+                                                    <rect x="170" y="10" width="70" height="70" fill="none" stroke="#000" stroke-width="7"/>
+                                                    <rect x="182" y="22" width="46" height="46" fill="#000"/>
+                                                    <rect x="191" y="31" width="28" height="28" fill="white"/>
+                                                    <rect x="200" y="40" width="10" height="10" fill="#000"/>
+                                                    <!-- Bottom-left finder -->
+                                                    <rect x="10" y="170" width="70" height="70" fill="none" stroke="#000" stroke-width="7"/>
+                                                    <rect x="22" y="182" width="46" height="46" fill="#000"/>
+                                                    <rect x="31" y="191" width="28" height="28" fill="white"/>
+                                                    <rect x="40" y="200" width="10" height="10" fill="#000"/>
+                                                    <!-- Data modules -->
+                                                    <rect x="100" y="10"  width="10" height="10" fill="#000"/>
+                                                    <rect x="120" y="10"  width="10" height="10" fill="#000"/>
+                                                    <rect x="140" y="10"  width="10" height="10" fill="#000"/>
+                                                    <rect x="100" y="30"  width="20" height="10" fill="#000"/>
+                                                    <rect x="130" y="30"  width="10" height="10" fill="#000"/>
+                                                    <rect x="100" y="50"  width="10" height="10" fill="#000"/>
+                                                    <rect x="120" y="50"  width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="70"  width="30" height="10" fill="#000"/>
+                                                    <rect x="10"  y="100" width="20" height="10" fill="#000"/>
+                                                    <rect x="40"  y="100" width="10" height="10" fill="#000"/>
+                                                    <rect x="60"  y="100" width="20" height="10" fill="#000"/>
+                                                    <rect x="10"  y="120" width="10" height="10" fill="#000"/>
+                                                    <rect x="30"  y="120" width="20" height="10" fill="#000"/>
+                                                    <rect x="60"  y="120" width="10" height="10" fill="#000"/>
+                                                    <rect x="10"  y="140" width="30" height="10" fill="#000"/>
+                                                    <rect x="50"  y="140" width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="100" width="20" height="10" fill="#000"/>
+                                                    <rect x="130" y="100" width="10" height="10" fill="#000"/>
+                                                    <rect x="150" y="100" width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="120" width="10" height="10" fill="#000"/>
+                                                    <rect x="120" y="120" width="20" height="10" fill="#000"/>
+                                                    <rect x="150" y="120" width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="140" width="30" height="10" fill="#000"/>
+                                                    <rect x="140" y="140" width="10" height="10" fill="#000"/>
+                                                    <rect x="160" y="140" width="10" height="10" fill="#000"/>
+                                                    <rect x="180" y="100" width="20" height="10" fill="#000"/>
+                                                    <rect x="210" y="100" width="30" height="10" fill="#000"/>
+                                                    <rect x="180" y="120" width="10" height="10" fill="#000"/>
+                                                    <rect x="200" y="120" width="20" height="10" fill="#000"/>
+                                                    <rect x="230" y="120" width="10" height="10" fill="#000"/>
+                                                    <rect x="190" y="140" width="20" height="10" fill="#000"/>
+                                                    <rect x="220" y="140" width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="180" width="10" height="10" fill="#000"/>
+                                                    <rect x="120" y="180" width="20" height="10" fill="#000"/>
+                                                    <rect x="150" y="180" width="20" height="10" fill="#000"/>
+                                                    <rect x="180" y="180" width="10" height="10" fill="#000"/>
+                                                    <rect x="200" y="180" width="30" height="10" fill="#000"/>
+                                                    <rect x="100" y="200" width="20" height="10" fill="#000"/>
+                                                    <rect x="130" y="200" width="10" height="10" fill="#000"/>
+                                                    <rect x="150" y="200" width="20" height="10" fill="#000"/>
+                                                    <rect x="190" y="200" width="10" height="10" fill="#000"/>
+                                                    <rect x="210" y="200" width="20" height="10" fill="#000"/>
+                                                    <rect x="100" y="220" width="10" height="10" fill="#000"/>
+                                                    <rect x="120" y="220" width="30" height="10" fill="#000"/>
+                                                    <rect x="160" y="220" width="10" height="10" fill="#000"/>
+                                                    <rect x="180" y="220" width="20" height="10" fill="#000"/>
+                                                    <rect x="210" y="220" width="30" height="10" fill="#000"/>
+                                  </svg>svg>
+                    </div>div>
+                    <div class="qr-url">bilcenter.gl</div>div>
+                    <div class="qr-cta">D&oslash;gnåben booking &bull; Afhentning i Nuuk Lufthavn</div>div>
+                    <div class="slide-num">08 / 08</div>div>
+          </div>div>
+
+    </div>div><!-- /slideshow -->
+
+    <script>
+      (function() {
+            var slides = document.querySelectorAll('.slide');
+            var dotsEl  = document.getElementById('dots');
+            var barEl   = document.getElementById('progressBar');
+            var total   = slides.length;
+            var current = 0;
+            var INTERVAL = 8000;
+            var timer;
+
+            // Build dots
+            for (var i = 0; i < total; i++) {
+                      var d = document.createElement('div');
+                      d.className = 'dot' + (i === 0 ? ' active' : '');
+                      (function(idx){ d.addEventListener('click', function(){ goTo(idx); }); })(i);
+                      dotsEl.appendChild(d);
+            }
+
+            function goTo(n) {
+                      slides[current].classList.remove('active');
+                      dotsEl.children[current].classList.remove('active');
+                      current = ((n % total) + total) % total;
+                      slides[current].classList.add('active');
+                      dotsEl.children[current].classList.add('active');
+                      // Restart progress bar
+                      barEl.classList.remove('animating');
+                      void barEl.offsetWidth;
+                      barEl.classList.add('animating');
+            }
+
+            function next() { goTo(current + 1); }
+
+            // Start
+            goTo(0);
+            timer = setInterval(next, INTERVAL);
+
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                      if (e.key === 'ArrowRight' || e.key === ' ') { clearInterval(timer); next(); timer = setInterval(next, INTERVAL); }
+                      if (e.key === 'ArrowLeft') { clearInterval(timer); goTo(current - 1); timer = setInterval(next, INTERVAL); }
+            });
+      })();
+    </script>
+  </body>
+</html>html>
+    </script>
+  </body>
+      </style></title>
+  </head>
